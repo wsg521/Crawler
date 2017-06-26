@@ -1,15 +1,18 @@
 package com.open.crawler.utils;
 
-import java.io.File;
-import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-
 import com.sun.mail.util.MailSSLSocketFactory;
-
 import sun.misc.BASE64Encoder;
 
-import javax.activation.*;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.io.File;
+import java.util.Properties;
 
 /**
  * 发送邮件工具类
@@ -65,7 +68,7 @@ public class SendEmail {
 	 *            多个用逗号隔开
 	 */
 	public static void sendEmail(String subject, String text, String toAddress) {
-		sendEmail(subject, text, toAddress.split(","), null);
+		sendEmail(subject, text, toAddress.split(","), new String[]{});
 	}
 
 	/**
@@ -85,8 +88,36 @@ public class SendEmail {
 	}
 
 	/**
-	 * 发送多人条邮件
+	 * 发送多人多附件邮件
 	 * 
+	 * @param subject
+	 *            主题
+	 * @param text
+	 *            内容
+	 * @param toAddress
+	 *            收件地址
+	 * @param fileNames
+	 *            邮件附件
+	 */
+	public static void sendEmail(String subject, String text, String[] toAddress, String[] fileNames) {
+		try {
+			if (fileNames != null && fileNames.length > 0) {
+				File[] files = new File[fileNames.length];
+				int i = 0;
+				for (String fileName : fileNames) {
+					File file = new File(fileName);
+					files[i++] = file;
+				}
+				sendEmail(subject, text, toAddress, files);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 发送多人多附件邮件
+	 *
 	 * @param subject
 	 *            主题
 	 * @param text
@@ -96,7 +127,7 @@ public class SendEmail {
 	 * @param files
 	 *            邮件附件
 	 */
-	public static void sendEmail(String subject, String text, String[] toAddress, String[] files) {
+	public static void sendEmail(String subject, String text, String[] toAddress, File[] files) {
 		try {
 			if (session == null) {
 				init();
@@ -108,12 +139,11 @@ public class SendEmail {
 			msg.setHeader("charset", "UTF-8");
 			// msg.setSentDate(new Date());
 			// 附件
-			if (files != null) {
+			if (files != null && files.length > 0) {
 				Multipart multipart = new MimeMultipart();
-				for (String name : files) {
-					File file = new File(name);
+				for (File file : files) {
 					MimeBodyPart fileBody = new MimeBodyPart();
-					DataSource source = new FileDataSource(name);
+					DataSource source = new FileDataSource(file);
 					fileBody.setDataHandler(new DataHandler(source));
 					BASE64Encoder enc = new BASE64Encoder();
 					fileBody.setFileName("=?UTF-8?B?" + enc.encode(file.getName().getBytes()) + "?=");

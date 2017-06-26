@@ -1,6 +1,5 @@
 package com.open.crawler.utils;
 
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -176,7 +175,7 @@ public class DateTimeUtils {
             try {
                 return sdf.parse(date);
             } catch (ParseException e1) {
-                e.printStackTrace();
+                e1.printStackTrace();
                 return null;
             }
         }
