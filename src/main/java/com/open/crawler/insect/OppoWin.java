@@ -12,14 +12,14 @@ import org.jsoup.nodes.Element;
  */
 public class OppoWin extends InsectBase {
 
-    private static String oppoNoOld = "160429092967159";
-    private static String oppoNoNew = "170618125917031";
-    private static String title = "吴山岗 购oppo手机获奖通知";
-    private static String msg = "老用户购机获奖通知，请到oppo官网 http://www.oppo.com/cn " +
+    private String oppoNoOld = "160429092967159";
+    private String oppoNoNew = "170618125917031";
+    private String title = "吴山岗 购oppo手机获奖通知";
+    private String msg = "老用户购机获奖通知，请到oppo官网 http://www.oppo.com/cn " +
             "->首页->服务->中间名单 中查找，" +
             "购机订单号: 老单号: " + oppoNoOld + " 新单号: " + oppoNoNew;
 
-    public static void start() {
+    public void start() {
         try {
             String url = "http://www.oppo.com/cn/service/list";
             httpGet = new HttpGet(url);

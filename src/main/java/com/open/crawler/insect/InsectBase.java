@@ -16,22 +16,22 @@ import org.jsoup.select.Elements;
  */
 public class InsectBase {
 
-    private static HttpClient httpClient = null;
-    public static HttpPost httpPost = null;
-    public static HttpGet httpGet = null;
-    public static HttpResponse httpResp = null;
-    public static Document document = null;
-    public static Elements elements = null;
+    private HttpClient httpClient = null;
+    public HttpPost httpPost = null;
+    public HttpGet httpGet = null;
+    public HttpResponse httpResp = null;
+    public Document document = null;
+    public Elements elements = null;
 
-    public static void sendErrorEmail(String title, Exception e) {
+    public void sendErrorEmail(String title, Exception e) {
         SendEmail.sendEmail(title, e.getMessage(), "1210460667@qq.com");
     }
 
-    public static void sendCallFileEmail(String title, String msg) {
+    public void sendCallFileEmail(String title, String msg) {
         SendEmail.sendEmail(title, msg, "1210460667@qq.com");
     }
 
-    public static HttpClient getHttpClient() {
-        return httpClient != null ? httpClient : SSL.creatHttpClient();
+    public HttpClient getHttpClient() {
+        return httpClient != null ? httpClient : SSL.creatNewHttpClient();
     }
 }

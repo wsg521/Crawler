@@ -18,17 +18,17 @@ import java.util.Date;
  */
 public class HangZhouFangGuanJu extends InsectBase {
 
-    private static String url = "http://www.hzfc.gov.cn";
-    private static String dataUrl = "http://www.hzfc.gov.cn/scxx";
-    private static String imgSrc = null;
-    private static String imgSrcTag = ".php?";
-    private static int sleepTime = 1000 * 60 * 50;
+    private String url = "http://www.hzfc.gov.cn";
+    private String dataUrl = "http://www.hzfc.gov.cn/scxx";
+    private String imgSrc = null;
+    private String imgSrcTag = ".php?";
+    private int sleepTime = 1000 * 60 * 50;
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         start();
     }
 
-    public static void start() {
+    public void start() {
         try {
             int count = 1;
             while (true) {
@@ -42,7 +42,7 @@ public class HangZhouFangGuanJu extends InsectBase {
         }
     }
 
-    public static void doTasks() {
+    public void doTasks() {
         try {
             httpGet = new HttpGet(url);
             httpResp = getHttpClient().execute(httpGet);
@@ -67,7 +67,7 @@ public class HangZhouFangGuanJu extends InsectBase {
         }
     }
 
-    private static void getData(String imgUrl, String realPath) {
+    private void getData(String imgUrl, String realPath) {
         try {
             httpGet = new HttpGet(imgUrl);
             httpResp = getHttpClient().execute(httpGet);
@@ -81,7 +81,7 @@ public class HangZhouFangGuanJu extends InsectBase {
         }
     }
 
-    private static String getRealPath() {
+    private String getRealPath() {
         Date date = new Date();
         StringBuilder path =  new StringBuilder(Utils.rootPath);
         path.append("杭州售房信息")
@@ -94,7 +94,7 @@ public class HangZhouFangGuanJu extends InsectBase {
         return path.toString();
     }
 
-    private static String getIMGPath(String imgSrc) {
+    private String getIMGPath(String imgSrc) {
 
         if (imgSrc.contains("jrspfksxx")) {
             return "今日商品房可售信息";
