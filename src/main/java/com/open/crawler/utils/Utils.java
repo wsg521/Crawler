@@ -3,8 +3,10 @@ package com.open.crawler.utils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.sql.Timestamp;
@@ -395,5 +397,21 @@ public class Utils {
 		} finally {
 			file = null;
 		}
+	}
+
+	/**
+	 * 读取BufferedReader
+	 *
+	 * @param bin
+	 * @return
+	 * @throws IOException
+	 */
+	public static String bufferedReaderToString(BufferedReader bin) throws IOException {
+		StringBuilder result = new StringBuilder();
+		String str;
+		while ((str = bin.readLine()) != null) {
+			result.append(str);
+		}
+		return result.toString();
 	}
 }
